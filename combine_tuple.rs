@@ -8,6 +8,14 @@ trait ProductList{
     type Tuple;
 }
 
+impl<T> Tuple for (T,){
+    type ProductList = Project<T,()>;
+}
+
+impl<T> ProductList for Project<T,()>{
+    type Tuple = (T,);
+}
+
 impl<T,U> Tuple for (T,U){
     type ProductList = Project<T,Project<U,()>>;
 } 
@@ -36,7 +44,7 @@ type TupleToProduct<T> = <T as Tuple>::ProductList;
 type ProductToTuple<T> = <T as ProductList>::Tuple;
 
 fn main(){
-    type R = <TupleToProduct<(i32,u8)> as Combin<Project<String,()>>>::Output;
+    type R = <TupleToProduct<(i32,u8)> as Combin<TupleToProduct<(String,)>>>::Output;
     type RTuple = ProductToTuple<R>;
     let c = RTuple::default();  // (i32, u8,String)
 }
