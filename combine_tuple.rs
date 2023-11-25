@@ -38,5 +38,5 @@ type ProductToTuple<T> = <T as ProductList>::Tuple;
 fn main(){
     type R = <TupleToProduct<(i32,u8)> as Combin<Project<String,()>>>::Output;
     type RTuple = ProductToTuple<R>;
-    let c = RTuple::default();
+    let c = RTuple::default();  // (i32, u8,String)
 }
